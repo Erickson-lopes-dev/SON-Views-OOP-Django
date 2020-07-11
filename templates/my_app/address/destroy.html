@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}Excluir endereço{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3>Excluir endereço - {{ address.address }}</h3>
+        <form action="{% url 'my_app:address_destroy' address.id %}" method="post">
+            {% csrf_token %}
+            <fieldset disabled>
+                {% include 'my_app/address/form_django.html' %}
+            </fieldset>
+            <button type="submit" class="btn btn-danger">Excluir</button>
+        </form>
+    </div>
+{% endblock %}

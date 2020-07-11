@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}Novo endereço{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3>Novo endereço</h3>
+        <form action="{% url 'my_app:address_create' %}" method="post" {% if form_submitted %}class="was-validated" {% endif %}>
+            {% csrf_token %}
+            {% include 'my_app/address/form_django.html' %}
+            <button type="submit" class="btn btn-primary">Criar</button>
+        </form>
+    </div>
+{% endblock %}

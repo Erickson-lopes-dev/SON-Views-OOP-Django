@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}Listagem de endereços{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3>Listagem de endereços</h3>
+        <a href="{% url 'my_app:address_create' %}" class="btn btn-primary">Novo endereço</a>
+        <br/><br/>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Endereço</th>
+                <th>Complemento</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for address in addresses %}
+                <tr>
+                    <td>{{ address.id }}</td>
+                    <td>{{ address.address }}</td>
+                    <td>{{ address.address_complement_normalized }}</td>
+                    <td>{{ address.city }}</td>
+                    <td>{{ address.state }}</td>
+                    <td>
+                        <a href="{% url 'my_app:address_update' address.id %}">Editar<a> |
+                            <a href="{% url 'my_app:address_destroy' address.id %}">Excluir<a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

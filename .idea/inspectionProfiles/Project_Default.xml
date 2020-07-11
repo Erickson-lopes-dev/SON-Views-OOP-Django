@@ -1,0 +1,41 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="1">
+            <item index="0" class="java.lang.String" itemvalue="state.0" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N802" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="requests" />
+          <option value="mysql.connector" />
+          <option value="core.models.Produto.objects" />
+          <option value="core.models.Produto.object" />
+          <option value="clientes.models.Person.objects" />
+          <option value="mysite.polls.models.Question.objects" />
+          <option value="mysite.polls.models.Question.DoesNotExist" />
+          <option value="mysite.polls.models.Choice.DoesNotExist" />
+          <option value="meuPrimeiroProjeto.clientes.models.Person.objects" />
+          <option value="gestao_clientes.clientes.models.Person.objects" />
+          <option value="my_app.models.Post.objects" />
+          <option value="my_app.models.Category.objects" />
+          <option value="django.db.models.Foreignkey" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

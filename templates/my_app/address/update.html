@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}Editar endereço{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3>Editar endereço - {{ address.address }}</h3>
+        <form action="{% url 'my_app:address_update' address.id %}" method="post" {% if form_submitted %}class="was-validated" {% endif %}>
+            {% csrf_token %}
+            {% include 'my_app/address/form_django.html' %}
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
+{% endblock %}

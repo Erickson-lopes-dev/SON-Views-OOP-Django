@@ -1,0 +1,27 @@
+{% csrf_token %}
+<div class="form-group">
+    <label for="address">Endereço</label>
+    <input type="text" id="address" name="address" class="form-control" value="{{ address.address }}">
+</div>
+<div class="form-group">
+    <label for="address_complement">Complemento</label>
+    <input type="text" id="address_complement" name="address_complement" class="form-control"
+           value="{{ address.address_complement_normalized }}">
+</div>
+<div class="form-group">
+    <label for="city">Cidade</label>
+    <input type="text" id="city" name="city" class="form-control" value="{{ address.city }}">
+</div>
+<div class="form-group">
+    <label for="state">Estado</label>
+    <select id="state" name="state" class="form-control">
+        {% for state in states %}
+            <option value="{{ state.0 }}"
+                    {% if state.0 == address.state %}selected="selected"{% endif %}>{{ state.1 }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="form-group">
+    <label for="country">País</label>
+    <input type="text" id="country" name="country" class="form-control" value="{{ address.country }}">
+</div>

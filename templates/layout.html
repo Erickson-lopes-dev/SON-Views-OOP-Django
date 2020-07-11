@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} - School of Net</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<h1>
+    Django Intermediário {% if request.user.is_authenticated %}- Olá {{ request.user.first_name }}{% endif %}
+</h1>
+{% block content %}{% endblock %}
+</body>
+</html>
+
+<!-- Django - Integração com Assets -->

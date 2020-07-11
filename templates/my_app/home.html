@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3>Estou autenticado - {{ request.user.first_name }}</h3>
+        <a href="/logout/">Logout</a>
+    </div>
+{% endblock %}
