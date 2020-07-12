@@ -4,13 +4,33 @@ from django.contrib.auth import authenticate, login as django_login, logout as d
 from django.contrib.auth.decorators import login_required
 from .models import Address
 from .forms import AddressForm
+from django.views.generic import TemplateView
 
 
-# Create your views here.
+class LoginView(TemplateView):
+    # GET
+    template_name = 'my_app/login.html'
+
+    def post(self, request, *args, **kwargs):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            django_login(request, user)
+            return redirect('/home/')
+        message = 'Credenciais inválidas'
+        return self.render_to_response({'message': message})
+
+
 def login(request: HttpRequest):
+    # GET
     if request.method == 'GET':
         return render(request, 'my_app/login.html')
 
+
+    # POST
     username = request.POST.get('username')
     password = request.POST.get('password')
 
