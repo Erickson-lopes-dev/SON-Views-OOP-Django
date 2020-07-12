@@ -1,15 +1,32 @@
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from django.contrib.auth.decorators import login_required
 from .models import Address
 from .forms import AddressForm
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 
 
-class LoginView(TemplateView):
+# class LoginView(TemplateView):
+#     # GET
+#     template_name = 'my_app/login.html'
+#
+#     def post(self, request, *args, **kwargs):
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#
+#         user = authenticate(username=username, password=password)
+#
+#         if user:
+#             django_login(request, user)
+#             return redirect('/home/')
+#         message = 'Credenciais inválidas'
+#         return self.render_to_response({'message': message})
+
+class LoginView(View):
     # GET
-    template_name = 'my_app/login.html'
+    def get(self, request, *args, **kwargs):
+        return render(request, 'my_app/login.html')
 
     def post(self, request, *args, **kwargs):
         username = request.POST.get('username')
@@ -21,7 +38,7 @@ class LoginView(TemplateView):
             django_login(request, user)
             return redirect('/home/')
         message = 'Credenciais inválidas'
-        return self.render_to_response({'message': message})
+        return render(request, 'my_app/home/', {'message': message})
 
 
 def login(request: HttpRequest):
