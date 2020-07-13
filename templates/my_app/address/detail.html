@@ -1,23 +1,23 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Detalhes do endereço - {{ address.address }}
+    Detalhes do endereço - {{ object.address }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <h3>
-            Detalhes do endereço - {{ address.address }}
+            Detalhes do endereço - {{ object.address }}
         </h3>
         <table class="table table-bordered">
             <tbody>
             <tr>
                 <th scope="row">#</th>
-                <td>{{ address.id }}</td>
+                <td>{{ object.id }}</td>
             </tr>
             <tr>
                 <th scope="row">Endereço</th>
-                <td>{{ address.address }}</td>
+                <td>{{ object.address }}</td>
             </tr>
             </tbody>
         </table>

@@ -5,12 +5,13 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import Address
 from .forms import AddressForm
-from django.views.generic import TemplateView, View, RedirectView, ListView, DetailView, CreateView
+from django.views.generic import TemplateView, View, RedirectView, ListView, DetailView, CreateView, UpdateView
 from django_views_oop.settings import LOGIN_URL
 from django.views.generic.base import ContextMixin, TemplateResponseMixin
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+
 
 class LoginView(TemplateView):
     template_name = 'my_app/login.html'
@@ -61,6 +62,19 @@ class AddressCreateView(LoginRequiredMixin, CreateView):
     form_class = AddressForm
     success_url = reverse_lazy('my_app:address_list')
     template_name = 'my_app/address/create.html'
+
+    # validar e salvar
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class AddressUpdateView(LoginRequiredMixin, UpdateView):
+    model = Address
+    # fields = ['address', 'address_complement', 'city', 'state', 'country']
+    form_class = AddressForm
+    template_name = 'my_app/address/update.html'
+    success_url = reverse_lazy('my_app:address_list')
 
     # validar e salvar
     def form_valid(self, form):
