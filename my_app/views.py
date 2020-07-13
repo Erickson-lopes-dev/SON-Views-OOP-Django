@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from .models import Address
 from .forms import AddressForm
 from django.views.generic import TemplateView, View, RedirectView
+from django_views_oop.settings import LOGIN_URL
 
 
 class LoginView(View):
@@ -42,7 +43,6 @@ class LogoutRedirectView(RedirectView):
     def get(self, request, *args, **kwargs):
         django_logout(request)
         return super().get(request, *args, **kwargs)
-
 
 # @login_required(login_url='/login')
 # def logout(request):
@@ -81,7 +81,7 @@ def address_create(request):
     return render(request, 'my_app/address/create.html', {'form': form, 'form_submitted': form_submitted})
 
 
-@login_required(login_url='/login')
+@login_required(login_url=LOGIN_URL)
 def address_update(request, id):
     form_submitted = False
     address = Address.objects.get(id=id)
