@@ -4,8 +4,8 @@
 
 {% block content %}
     <div class="container">
-        <h3>Excluir endereço - {{ address.address }}</h3>
-        <form action="{% url 'my_app:address_destroy' address.id %}" method="post">
+        <h3>Excluir endereço - {{ object.pk }}</h3>
+        <form action="{% url 'my_app:address_destroy' object.pk %}" method="post">
             {% csrf_token %}
             <fieldset disabled>
                 {% include 'my_app/address/form_django.html' %}
