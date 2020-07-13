@@ -30,7 +30,7 @@ class LoginView(View):
 # 301 - permanente
 
 # Para não ficar repetindo o @login_required(login_url='/login') em cada função
-@method_decorator(login_required(login_url='/login'), name="dispath")
+@method_decorator(login_required(login_url='/login'), name="dispatch")
 class LogoutRedirectView(RedirectView):
     url = '/logout/'
 
