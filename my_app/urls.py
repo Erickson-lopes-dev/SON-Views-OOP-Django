@@ -11,7 +11,8 @@ urlpatterns = [
     # path('addresses/', views.address_list, name='address_list'),
     path('addresses/', views.AddressListView.as_view(), name='address_list'),
     path('addresses/<int:pk>', views.AddressDetailView.as_view(), name='address_detail'),
-    path('addresses/create/', views.address_create, name='address_create'),
+    # path('addresses/create/', views.address_create, name='address_create'),
+    path('addresses/create/', views.AddressCreateView.as_view(), name='address_create'),
     path('addresses/<int:id>/update/', views.address_update, name='address_update'),
     path('addresses/<int:id>/destroy/', views.address_destroy, name='address_destroy'),
 ]

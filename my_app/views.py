@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import Address
 from .forms import AddressForm
-from django.views.generic import TemplateView, View, RedirectView, ListView, DetailView
+from django.views.generic import TemplateView, View, RedirectView, ListView, DetailView, CreateView
 from django_views_oop.settings import LOGIN_URL
 from django.views.generic.base import ContextMixin, TemplateResponseMixin
 from django.views.generic.edit import FormMixin
@@ -44,18 +44,6 @@ class LogoutRedirectView(RedirectView):
         return super().get(request, *args, **kwargs)
 
 
-@login_required(login_url='/login')
-def home(request):
-    return render(request, 'my_app/home.html')
-
-
-# @login_required(login_url='/login')
-# def address_list(request):
-#     addresses = Address.objects.all()
-#     # print(list(addresses))
-#     return render(request, 'my_app/address/list.html', {'addresses': addresses})
-
-
 class AddressListView(LoginRequiredMixin, ListView):
     model = Address
     # queryset = Address.objects.filter()
@@ -67,23 +55,34 @@ class AddressDetailView(LoginRequiredMixin, DetailView):
     template_name = 'my_app/address/detail.html'
 
 
+class AddressCreateView(LoginRequiredMixin, CreateView):
+    model = Address
+    # fields = ['address', 'address_complement', 'city', 'state', 'country']
+    form_class = AddressForm
+    template_name = 'my_app/address/create.html'
+
+
 @login_required(login_url='/login')
-def address_create(request):
-    form_submitted = False
-    if request.method == 'GET':
-        # states = STATES_CHOICES
-        form = AddressForm()
-    else:
-        form_submitted = True
-        form = AddressForm(request.POST)
-        if form.is_valid():
-            address = form.save(commit=False)
-            address.user = request.user
-            address.save()
+def home(request):
+    return render(request, 'my_app/home.html')
 
-            return redirect(reverse('my_app:address_list'))
 
-    return render(request, 'my_app/address/create.html', {'form': form, 'form_submitted': form_submitted})
+# @login_required(login_url='/login')
+# def address_create(request):
+#     form_submitted = False
+#     if request.method == 'GET':
+#         form = AddressForm()
+#     else:
+#         form_submitted = True
+#         form = AddressForm(request.POST)
+#         if form.is_valid():
+#             address = form.save(commit=False)
+#             address.user = request.user
+#             address.save()
+#
+#             return redirect(reverse('my_app:address_list'))
+#
+#     return render(request, 'my_app/address/create.html', {'form': form, 'form_submitted': form_submitted})
 
 
 @login_required(login_url=LOGIN_URL)
