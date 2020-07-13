@@ -26,21 +26,28 @@ class LoginView(View):
         return render(request, 'my_app/home.html', {'message': message})
 
 
-@login_required(login_url='/login')
-def logout(request):
-    django_logout(request)
-    return redirect('/login/')
-
-
 # 302 - temporario
 # 301 - permanente
+
+# Para não ficar repetindo o @login_required(login_url='/login') em cada função
+@method_decorator(login_required(login_url='/login'), name="dispath")
 class LogoutRedirectView(RedirectView):
     url = '/logout/'
 
-    @method_decorator(login_required(login_url='/login'))
+    # # Para não ficar repetindo o @login_required(login_url='/login')
+    # @method_decorator(login_required(login_url='/login'))
+    # def dispatch(self, request, *args, **kwargs):
+    #     return super().dispatch(request, *args, **kwargs)
+
     def get(self, request, *args, **kwargs):
         django_logout(request)
         return super().get(request, *args, **kwargs)
+
+
+# @login_required(login_url='/login')
+# def logout(request):
+#     django_logout(request)
+#     return redirect('/login/')
 
 
 @login_required(login_url='/login')
