@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Detalhes do endereço - {{ address.address }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3>
+            Detalhes do endereço - {{ address.address }}
+        </h3>
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th scope="row">#</th>
+                <td>{{ address.id }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Endereço</th>
+                <td>{{ address.address }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
