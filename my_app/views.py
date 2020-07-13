@@ -7,12 +7,13 @@ from .models import Address
 from .forms import AddressForm
 from django.views.generic import TemplateView, View, RedirectView, ListView, DetailView
 from django_views_oop.settings import LOGIN_URL
+from django.views.generic.base import ContextMixin, TemplateResponseMixin
+from django.views.generic.edit import FormMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class LoginView(View):
-    # GET
-    def get(self, request, *args, **kwargs):
-        return render(request, 'my_app/login.html')
+class LoginView(TemplateView):
+    template_name = 'my_app/login.html'
 
     def post(self, request, *args, **kwargs):
         username = request.POST.get('username')
@@ -22,9 +23,12 @@ class LoginView(View):
 
         if user:
             django_login(request, user)
+            # next_param = request.GET.get('next')
+            # if next_param
+            # return HttpResponseRedirect('/home/')
             return redirect('/home/')
         message = 'Credenciais inválidas'
-        return render(request, 'my_app/home.html', {'message': message})
+        return self.render_to_response({'message': message})
 
 
 # 302 - temporario
@@ -52,15 +56,15 @@ def home(request):
 #     return render(request, 'my_app/address/list.html', {'addresses': addresses})
 
 
-class AddressListView(ListView):
+class AddressListView(LoginRequiredMixin, ListView):
     model = Address
     # queryset = Address.objects.filter()
     template_name = 'my_app/address/list.html'
 
 
-class AddressDetailView(DetailView):
+class AddressDetailView(LoginRequiredMixin, DetailView):
     model = Address
-    template_name = 'my_pp/address/detail.html'
+    template_name = 'my_app/address/detail.html'
 
 
 @login_required(login_url='/login')
