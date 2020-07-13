@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import Address
 from .forms import AddressForm
-from django.views.generic import TemplateView, View, RedirectView
+from django.views.generic import TemplateView, View, RedirectView, ListView
 from django_views_oop.settings import LOGIN_URL
 
 
@@ -44,22 +44,23 @@ class LogoutRedirectView(RedirectView):
         django_logout(request)
         return super().get(request, *args, **kwargs)
 
-# @login_required(login_url='/login')
-# def logout(request):
-#     django_logout(request)
-#     return redirect('/login/')
-
 
 @login_required(login_url='/login')
 def home(request):
     return render(request, 'my_app/home.html')
 
 
-@login_required(login_url='/login')
-def address_list(request):
-    addresses = Address.objects.all()
-    # print(list(addresses))
-    return render(request, 'my_app/address/list.html', {'addresses': addresses})
+# @login_required(login_url='/login')
+# def address_list(request):
+#     addresses = Address.objects.all()
+#     # print(list(addresses))
+#     return render(request, 'my_app/address/list.html', {'addresses': addresses})
+
+
+class AddressListView(ListView):
+    model = Address
+    # queryset = Address.objects.filter()
+    template_name = 'my_app/address/list.html'
 
 
 @login_required(login_url='/login')
