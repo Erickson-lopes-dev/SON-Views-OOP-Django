@@ -10,7 +10,7 @@ from django_views_oop.settings import LOGIN_URL
 from django.views.generic.base import ContextMixin, TemplateResponseMixin
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.urls import reverse_lazy
 
 class LoginView(TemplateView):
     template_name = 'my_app/login.html'
@@ -59,7 +59,13 @@ class AddressCreateView(LoginRequiredMixin, CreateView):
     model = Address
     # fields = ['address', 'address_complement', 'city', 'state', 'country']
     form_class = AddressForm
+    success_url = reverse_lazy('my_app:address_list')
     template_name = 'my_app/address/create.html'
+
+    # validar e salvar
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 @login_required(login_url='/login')

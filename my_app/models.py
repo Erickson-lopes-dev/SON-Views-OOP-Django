@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -51,3 +52,6 @@ class Address(models.Model):
 
     def __str__(self):
         return '%s, %s, %s' % (self.address, self.city, self.country)
+
+    def get_absolute_url(self):
+        return reverse('my_app:address_detail', kwargs={'pk': self.pk})
