@@ -81,6 +81,9 @@ class AddressUpdateView(LoginRequiredMixin, UpdateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form, form_submitted=True))
+
 
 @login_required(login_url='/login')
 def home(request):
