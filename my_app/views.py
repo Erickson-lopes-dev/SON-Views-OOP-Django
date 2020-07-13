@@ -2,26 +2,11 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from .models import Address
 from .forms import AddressForm
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, RedirectView
 
-
-# class LoginView(TemplateView):
-#     # GET
-#     template_name = 'my_app/login.html'
-#
-#     def post(self, request, *args, **kwargs):
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#
-#         user = authenticate(username=username, password=password)
-#
-#         if user:
-#             django_login(request, user)
-#             return redirect('/home/')
-#         message = 'Credenciais inválidas'
-#         return self.render_to_response({'message': message})
 
 class LoginView(View):
     # GET
@@ -38,39 +23,24 @@ class LoginView(View):
             django_login(request, user)
             return redirect('/home/')
         message = 'Credenciais inválidas'
-        return render(request, 'my_app/home/', {'message': message})
-
-
-def login(request: HttpRequest):
-    # GET
-    if request.method == 'GET':
-        return render(request, 'my_app/login.html')
-
-
-    # POST
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-
-    user = authenticate(username=username, password=password)
-
-    if user:
-        django_login(request, user)
-        # next_param = request.GET.get('next')
-        # if next_param
-        # return HttpResponseRedirect('/home/')
-        return redirect('/home/')
-    message = 'Credenciais inválidas'
-    return render(request, 'my_app/login.html', {'message': message})
-
-    # if request.user.is_authenticated():
-    #     request.user.first_name
-    #     #logica quando o usuario está autenticado
+        return render(request, 'my_app/home.html', {'message': message})
 
 
 @login_required(login_url='/login')
 def logout(request):
     django_logout(request)
     return redirect('/login/')
+
+
+# 302 - temporario
+# 301 - permanente
+class LogoutRedirectView(RedirectView):
+    url = '/logout/'
+
+    @method_decorator(login_required(login_url='/login'))
+    def get(self, request, *args, **kwargs):
+        django_logout(request)
+        return super().get(request, *args, **kwargs)
 
 
 @login_required(login_url='/login')
